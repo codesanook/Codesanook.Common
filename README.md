@@ -1,2 +1,2 @@
 # CodeSanook.Common
-Orchard module that common classes to share among other modules
+Orchard module that contains common classes to share among other modules
