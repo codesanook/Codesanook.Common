@@ -22,6 +22,12 @@ namespace CodeSanook.Common.Data
             return schemaBuilder.CreateTable(associatedTableName, table);
         }
 
+        public static SchemaBuilder AlterTable<TModel>(this SchemaBuilder schemaBuilder, Action<AlterTableCommand> table)
+        {
+            return schemaBuilder.AlterTable(typeof(TModel).Name, table);
+        }
+
+
         public static SchemaBuilder AddCompositedPrimaryKey<TParent, TChild, TProperty>(
             this SchemaBuilder schemaBuilder,
             Expression<Func<TParent, TProperty>> parentPropertySelector,
@@ -46,6 +52,20 @@ namespace CodeSanook.Common.Data
             var dbType = SchemaUtils.ToDbType(propertyType);
             return command.Column(columnName, dbType, column);
         }
+
+        public static AlterTableCommand AddColumn<TModel, TProperty>(
+            this AlterTableCommand command,
+            Expression<Func<TModel, TProperty>> propertySelector,
+            Action<CreateColumnCommand> column = null,
+            bool isPrefixWithModelType = false)
+        {
+            var columnName = GetColumnName(propertySelector, isPrefixWithModelType);
+            var propertyType = GetPropertyType<TProperty>();
+            var dbType = SchemaUtils.ToDbType(propertyType);
+            command.AddColumn(columnName, dbType, column);
+            return command;
+        }
+
 
         //Need to get underlying type, we cannot send the generic type because it is not supported by DbType Enumeration
         private static Type GetPropertyType<TProperty>()
@@ -122,7 +142,7 @@ namespace CodeSanook.Common.Data
         private static string GetActualTableName<TParent, TChild>()
         {
             var tableName = GetAssociatedTableName<TParent, TChild>();
-            var tablePrefix = ModuleHelper.GetModuleName().Replace(".", "_") + "_";
+            var tablePrefix = ModuleHelper.GetModuleName<TParent>().Replace(".", "_") + "_";
 
             return $"{tablePrefix}{tableName}";
         }
@@ -136,5 +156,6 @@ namespace CodeSanook.Common.Data
         {
             return input.Replace(".", "_");
         }
+
     }
 }

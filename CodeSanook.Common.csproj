@@ -85,7 +85,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataTypes\DateTimeUtility.cs" />
+    <Compile Include="DataTypes\DateTimeHelper.cs" />
+    <Compile Include="DataTypes\StringHelper.cs" />
+    <Compile Include="Models\ContentHelper.cs" />
     <Compile Include="Models\ModelHelper.cs" />
     <Compile Include="Data\SchemaHelper.cs" />
     <Compile Include="Models\Entity.cs" />

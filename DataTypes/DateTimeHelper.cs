@@ -2,9 +2,8 @@
 
 namespace CodeSanook.Common.DataType
 {
-    public static class DateTimeUtility
+    public static class DateTimeHelper
     {
-
         public static DateTime ToUtcTime(DateTime dateTime, string timeZoneId = "SE Asia Standard Time")
         {
             var timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
@@ -150,5 +149,27 @@ namespace CodeSanook.Common.DataType
         Samoa Standard Time
         Line Islands Standard Time
         */
+
+        public static long GetUtcTimestamp(this DateTime dateTime)
+        {
+            if (dateTime.Kind != DateTimeKind.Utc)
+            {
+                throw new ArgumentException("dateTime is not UTC");
+            }
+
+            var utcTime = dateTime.ToUniversalTime();
+            var beginningOfTimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            long unixTimestamp = (long)(dateTime.Subtract(beginningOfTimeStamp)).TotalSeconds;
+            return unixTimestamp;
+        }
+
+        public static DateTime GetUtcDateTime(this long timestamp)
+        {
+            var now = DateTime.UtcNow;
+            var beginningOfTimeStamp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var utcNow = beginningOfTimeStamp.AddSeconds(timestamp);
+            return utcNow;
+        }
+
     }
 }
