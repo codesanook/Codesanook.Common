@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="DataTypes\DateTimeHelper.cs" />
     <Compile Include="DataTypes\StringHelper.cs" />
+    <Compile Include="Json\OnlyDateConverter.cs" />
     <Compile Include="Models\ContentHelper.cs" />
     <Compile Include="Models\ModelHelper.cs" />
     <Compile Include="Data\SchemaHelper.cs" />
