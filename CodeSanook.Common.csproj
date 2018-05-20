@@ -85,6 +85,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataTypes\ClassHelper.cs" />
     <Compile Include="DataTypes\DateTimeHelper.cs" />
     <Compile Include="DataTypes\StringHelper.cs" />
     <Compile Include="Json\OnlyDateConverter.cs" />
