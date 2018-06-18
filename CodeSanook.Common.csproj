@@ -88,6 +88,7 @@
     <Compile Include="DataTypes\ClassHelper.cs" />
     <Compile Include="DataTypes\DateTimeHelper.cs" />
     <Compile Include="DataTypes\StringHelper.cs" />
+    <Compile Include="Data\DeepTransformer.cs" />
     <Compile Include="Json\OnlyDateConverter.cs" />
     <Compile Include="Models\ContentHelper.cs" />
     <Compile Include="Models\ModelHelper.cs" />
