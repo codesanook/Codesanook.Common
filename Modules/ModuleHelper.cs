@@ -3,9 +3,10 @@ namespace CodeSanook.Common.Modules
 {
     public class ModuleHelper
     {
-        public static string GetModuleName<TInModule>()
-        {
-            return typeof(TInModule).Assembly.GetName().Name;
-        }
+        /// <summary>
+        /// get name of the module from a assembly
+        /// </summary>
+        public static string GetModuleName<TInModule>() 
+            => typeof(TInModule).Assembly.GetName().Name;
     }
 }
