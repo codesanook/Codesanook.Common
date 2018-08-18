@@ -1,12 +1,11 @@
-﻿
-namespace CodeSanook.Common.Modules
+﻿namespace CodeSanook.Common.Modules
 {
-    public class ModuleHelper
+    public static class ModuleHelper
     {
         /// <summary>
         /// get name of the module from a assembly
         /// </summary>
-        public static string GetModuleName<TInModule>() 
+        public static string GetModuleName<TInModule>()
             => typeof(TInModule).Assembly.GetName().Name;
     }
 }
