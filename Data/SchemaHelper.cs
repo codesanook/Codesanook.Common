@@ -22,11 +22,8 @@ namespace CodeSanook.Common.Data
             return schemaBuilder.CreateTable(associatedTableName, table);
         }
 
-        public static SchemaBuilder AlterTable<TModel>(this SchemaBuilder schemaBuilder, Action<AlterTableCommand> table)
-        {
-            return schemaBuilder.AlterTable(typeof(TModel).Name, table);
-        }
-
+        public static SchemaBuilder AlterTable<TModel>(this SchemaBuilder schemaBuilder, Action<AlterTableCommand> table) 
+            => schemaBuilder.AlterTable(typeof(TModel).Name, table);
 
         public static SchemaBuilder AddCompositedPrimaryKey<TParent, TChild, TProperty>(
             this SchemaBuilder schemaBuilder,
