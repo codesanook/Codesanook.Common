@@ -115,6 +115,7 @@
     <Compile Include="DataTypes\DateTimeHelper.cs" />
     <Compile Include="DataTypes\StringHelper.cs" />
     <Compile Include="Data\DeepTransformer.cs" />
+    <Compile Include="Data\JsonString.cs" />
     <Compile Include="Json\OnlyDateConverter.cs" />
     <Compile Include="Models\ContentHelper.cs" />
     <Compile Include="Models\ModelHelper.cs" />
