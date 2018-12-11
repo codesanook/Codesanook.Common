@@ -9,10 +9,8 @@ namespace CodeSanook.Common.Data
 {
     public static class SchemaHelper
     {
-        public static SchemaBuilder CreateTable<TModel>(this SchemaBuilder schemaBuilder, Action<CreateTableCommand> table = null)
-        {
-            return schemaBuilder.CreateTable(typeof(TModel).Name, table);
-        }
+        public static SchemaBuilder CreateTable<TModel>(this SchemaBuilder schemaBuilder, Action<CreateTableCommand> table = null) => 
+            schemaBuilder.CreateTable(typeof(TModel).Name, table);
 
         public static SchemaBuilder CreateTable<TParent, TChild>(
             this SchemaBuilder schemaBuilder,
@@ -139,20 +137,20 @@ namespace CodeSanook.Common.Data
         private static string GetActualTableName<TParent, TChild>()
         {
             var tableName = GetAssociatedTableName<TParent, TChild>();
-            var tablePrefix = ModuleHelper.GetModuleName<TParent>().Replace(".", "_") + "_";
-
+            var tablePrefix = ModuleHelper.GetModuleName<TParent>().ChangeToUnderScore() + "_";
             return $"{tablePrefix}{tableName}";
         }
 
-        private static string RemoveRecordName(this string input)
+        public static string GetTableName<TTable>( this SchemaBuilder schemaBuilder)
         {
-            return input.Replace("Record", "");
+            return string.Concat(
+                ModuleHelper.GetModuleName<TTable>().ChangeToUnderScore(),
+                "_",
+                typeof(TTable).Name
+            );
         }
 
-        private static string ChangeToUnderScore(this string input)
-        {
-            return input.Replace(".", "_");
-        }
-
+        private static string RemoveRecordName(this string input) => input.Replace("Record", "");
+        private static string ChangeToUnderScore(this string input) => input.Replace(".", "_");
     }
 }
