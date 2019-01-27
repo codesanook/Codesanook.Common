@@ -123,10 +123,12 @@
     <Compile Include="Modules\ModuleHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomHelper.cs" />
+    <Compile Include="ResourceManifest.cs" />
     <Compile Include="Web\JsonActionResult.cs" />
     <Compile Include="Web\MvcHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\system.js" />
     <Content Include="Web.config" />
     <Content Include="Module.txt" />
   </ItemGroup>
@@ -142,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Content Include="Scripts\Web.config" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
