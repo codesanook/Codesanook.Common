@@ -7,7 +7,7 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CodeSanook.Common.Web
+namespace Codesanook.Common.Web
 {
     public class JsonActionResult : ActionResult
     {
