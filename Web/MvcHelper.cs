@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 
-namespace CodeSanook.Common.Web
+namespace Codesanook.Common.Web
 {
     public static class MvcHelper
     {
