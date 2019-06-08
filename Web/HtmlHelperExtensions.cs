@@ -1,50 +1,30 @@
-using JavaScriptEngineSwitcher.Core;
-using JavaScriptEngineSwitcher.V8;
+using Orchard;
 using React;
 using System;
 using System.IO;
 using System.Web;
-using IHtmlHelper = System.Web.Mvc.HtmlHelper;
+using System.Web.Mvc;
 
-namespace Codesanook.Common.Web
-{
+namespace Codesanook.Common.Web {
     /// <summary>
     /// HTML Helpers for utilising React from an ASP.NET MVC application.
     /// </summary>
-    public static class HtmlHelperExtensions
-    {
-        private static IReactEnvironment reactEnvironment;
+    public static class HtmlHelperExtensions {
+
+        private static WorkContext GetWorkContext(HtmlHelper html) {
+            var workContext = html.ViewContext.RequestContext.GetWorkContext();
+            if (workContext == null)
+                throw new ApplicationException("The WorkContext cannot be found for the request");
+
+            return workContext;
+        }
 
         /// <summary>
         /// Gets the React environment
         /// </summary>
-        private static IReactEnvironment Environment
-        {
-            get
-            {
-                if (reactEnvironment != null) return reactEnvironment;
-
-                ReactSiteConfiguration.Configuration
-                    .SetLoadBabel(false)
-                    .AddScriptWithoutTransform("~/modules/codesanook.common/scripts/server-bundle.js");
-
-                JsEngineSwitcher.Current.DefaultEngineName = V8JsEngine.EngineName;
-                JsEngineSwitcher.Current.EngineFactories.AddV8();
-
-                // One instance shared for the whole app
-                var switcher = JsEngineSwitcher.Current;//Resolve by return an instance
-                var config = ReactSiteConfiguration.Configuration;// Resolve by return an instance
-                var cache = new AspNetCache(HttpRuntime.Cache);//AsPerRequestSingleton();//safe to singleton
-
-                var fileCacheHash = new FileCacheHash();//AsPerRequestSingleton()//
-                var fileSystem = new AspNetFileSystem(); //AsPerRequestSingleton(); //safe to singleton
-
-                var factor = new JavaScriptEngineFactory(switcher, config, cache, fileSystem); //AsSingleton();
-                var reactIdGenerator = new ReactIdGenerator();//AsSingleton()
-
-                reactEnvironment = new ReactEnvironment(factor, config, cache, fileSystem, fileCacheHash, reactIdGenerator);//AsPerRequestSingleton()
-                return reactEnvironment;
-            }
+        private static IReactEnvironment GetEnvironment(HtmlHelper htmlHelper) {
+            var reactEnvironment = GetWorkContext(htmlHelper).Resolve<IReactEnvironment>();
+            return reactEnvironment;
         }
 
         /// <summary>
@@ -62,7 +42,7 @@ namespace Codesanook.Common.Web
         /// <param name="exceptionHandler">A custom exception handler that will be called if a component throws during a render. Args: (Exception ex, string componentName, string containerId)</param>
         /// <returns>The component's HTML</returns>
         public static IHtmlString React<T>(
-            this IHtmlHelper htmlHelper,
+            this HtmlHelper htmlHelper,
             string componentName,
             T props,
             string htmlTag = null,
@@ -71,29 +51,18 @@ namespace Codesanook.Common.Web
             bool serverOnly = false,
             string containerClass = null,
             Action<Exception, string, string> exceptionHandler = null
-        )
-        {
-            return new ActionHtmlString(writer =>
-            {
-                try
-                {
-                    var reactComponent = Environment.CreateComponent(componentName, props, containerId, clientOnly, serverOnly);
-                    if (!string.IsNullOrEmpty(htmlTag))
-                    {
-                        reactComponent.ContainerTag = htmlTag;
-                    }
-
-                    if (!string.IsNullOrEmpty(containerClass))
-                    {
-                        reactComponent.ContainerClass = containerClass;
-                    }
-
-                    reactComponent.RenderHtml(writer, clientOnly, serverOnly, exceptionHandler);
+        ) {
+            return new ActionHtmlString(writer => {
+                var reactComponent = GetEnvironment(htmlHelper).CreateComponent(componentName, props, containerId, clientOnly, serverOnly);
+                if (!string.IsNullOrEmpty(htmlTag)) {
+                    reactComponent.ContainerTag = htmlTag;
                 }
-                finally
-                {
-                    //Environment.ReturnEngineToPool();
+
+                if (!string.IsNullOrEmpty(containerClass)) {
+                    reactComponent.ContainerClass = containerClass;
                 }
+
+                reactComponent.RenderHtml(writer, clientOnly, serverOnly, exceptionHandler);
             });
         }
 
@@ -113,7 +82,7 @@ namespace Codesanook.Common.Web
         /// <param name="exceptionHandler">A custom exception handler that will be called if a component throws during a render. Args: (Exception ex, string componentName, string containerId)</param>
         /// <returns>The component's HTML</returns>
         public static IHtmlString ReactWithInit<T>(
-            this IHtmlHelper htmlHelper,
+            this HtmlHelper htmlHelper,
             string componentName,
             T props,
             string htmlTag = null,
@@ -121,31 +90,20 @@ namespace Codesanook.Common.Web
             bool clientOnly = false,
             string containerClass = null,
             Action<Exception, string, string> exceptionHandler = null
-        )
-        {
-            return new ActionHtmlString(writer =>
-            {
-                try
-                {
-                    var reactComponent = Environment.CreateComponent(componentName, props, containerId, clientOnly);
-                    if (!string.IsNullOrEmpty(htmlTag))
-                    {
-                        reactComponent.ContainerTag = htmlTag;
-                    }
-
-                    if (!string.IsNullOrEmpty(containerClass))
-                    {
-                        reactComponent.ContainerClass = containerClass;
-                    }
-
-                    reactComponent.RenderHtml(writer, clientOnly, exceptionHandler: exceptionHandler);
-                    writer.WriteLine();
-                    WriteScriptTag(writer, bodyWriter => reactComponent.RenderJavaScript(bodyWriter));
+        ) {
+            return new ActionHtmlString(writer => {
+                var reactComponent = GetEnvironment(htmlHelper).CreateComponent(componentName, props, containerId, clientOnly);
+                if (!string.IsNullOrEmpty(htmlTag)) {
+                    reactComponent.ContainerTag = htmlTag;
                 }
-                finally
-                {
-                    //    Environment.ReturnEngineToPool();
+
+                if (!string.IsNullOrEmpty(containerClass)) {
+                    reactComponent.ContainerClass = containerClass;
                 }
+
+                reactComponent.RenderHtml(writer, clientOnly, exceptionHandler: exceptionHandler);
+                writer.WriteLine();
+                WriteScriptTag(htmlHelper, writer, bodyWriter => reactComponent.RenderJavaScript(bodyWriter));
             });
         }
 
@@ -154,35 +112,21 @@ namespace Codesanook.Common.Web
         /// attach event handlers to the server-rendered HTML.
         /// </summary>
         /// <returns>JavaScript for all components</returns>
-        public static IHtmlString ReactInitJavaScript(this IHtmlHelper htmlHelper, bool clientOnly = false)
-        {
-            return new ActionHtmlString(writer =>
-            {
-                try
-                {
-                    WriteScriptTag(writer, bodyWriter => Environment.GetInitJavaScript(bodyWriter, clientOnly));
-                }
-                finally
-                {
-                    //Environment.ReturnEngineToPool();
-                }
+        public static IHtmlString ReactInitJavaScript(this HtmlHelper htmlHelper, bool clientOnly = false) {
+            return new ActionHtmlString(writer => {
+                WriteScriptTag(htmlHelper, writer, bodyWriter => GetEnvironment(htmlHelper).GetInitJavaScript(bodyWriter, clientOnly));
             });
         }
 
-        private static void WriteScriptTag(TextWriter writer, Action<TextWriter> bodyWriter)
-        {
+        private static void WriteScriptTag(HtmlHelper htmlHelper, TextWriter writer, Action<TextWriter> bodyWriter) {
             writer.Write("<script");
-            if (Environment.Configuration.ScriptNonceProvider != null)
-            {
+            if (GetEnvironment(htmlHelper).Configuration.ScriptNonceProvider != null) {
                 writer.Write(" nonce=\"");
-                writer.Write(Environment.Configuration.ScriptNonceProvider());
+                writer.Write(GetEnvironment(htmlHelper).Configuration.ScriptNonceProvider());
                 writer.Write("\"");
             }
-
             writer.Write(">");
-
             bodyWriter(writer);
-
             writer.Write("</script>");
         }
     }
