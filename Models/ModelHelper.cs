@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CodeSanook.Common.Models
+namespace Codesanook.Common.Models
 {
     public static class ModelHelper
     {

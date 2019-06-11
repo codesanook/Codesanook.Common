@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 
-namespace CodeSanook.Common.Models
+namespace Codesanook.Common.Models
 {
     public abstract class Entity<TId>
     {

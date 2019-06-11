@@ -3,7 +3,7 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.ContentManagement.MetaData.Builders;
 using System;
 
-namespace CodeSanook.Common.Models
+namespace Codesanook.Common.Models
 {
     public static class ContentHelper
     {

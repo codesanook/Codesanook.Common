@@ -1,4 +1,4 @@
-﻿namespace CodeSanook.Common.Modules
+﻿namespace Codesanook.Common.Modules
 {
     public static class ModuleHelper
     {
