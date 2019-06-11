@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json.Converters;
 
-namespace CodeSanook.Common.Json
+namespace Codesanook.Common.Json
 {
     public class OnlyDateConverter : IsoDateTimeConverter
     {

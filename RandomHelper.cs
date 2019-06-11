@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace CodeSanook.Common
+namespace Codesanook.Common
 {
     public class RandomHelper
     {

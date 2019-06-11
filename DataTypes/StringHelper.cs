@@ -2,7 +2,7 @@
 using System;
 using System.Linq;
 
-namespace CodeSanook.Common.DataTypes
+namespace Codesanook.Common.DataTypes
 {
     public static class StringHelper
     {

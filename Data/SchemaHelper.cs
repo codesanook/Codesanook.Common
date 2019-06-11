@@ -1,11 +1,11 @@
-﻿using CodeSanook.Common.Modules;
+﻿using Codesanook.Common.Modules;
 using FluentNHibernate.Mapping;
 using Orchard.Data.Migration.Schema;
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace CodeSanook.Common.Data
+namespace Codesanook.Common.Data
 {
     public static class SchemaHelper
     {

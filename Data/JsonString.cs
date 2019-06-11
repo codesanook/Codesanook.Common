@@ -5,7 +5,7 @@ using System;
 using System.Data;
 using System.Data.Common;
 
-namespace CodeSanook.Common.Data
+namespace Codesanook.Common.Data
 {
     //https://gist.github.com/phillip-haydon/1936188
     [Serializable]

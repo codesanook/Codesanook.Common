@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace CodeSanook.Common.DataTypes
+namespace Codesanook.Common.DataTypes
 {
     public static class ClassHelper
     {
