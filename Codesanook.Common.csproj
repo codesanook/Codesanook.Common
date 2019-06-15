@@ -183,6 +183,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Copy-V8.ps1" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -243,4 +244,11 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\packages\JavaScriptEngineSwitcher.V8.Native.win-x86.3.1.0\build\JavaScriptEngineSwitcher.V8.Native.win-x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\JavaScriptEngineSwitcher.V8.Native.win-x86.3.1.0\build\JavaScriptEngineSwitcher.V8.Native.win-x86.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PostBuildEvent>PowerShell -File $(ProjectDir)Copy-V8.ps1 -TargetDir $(TargetDir)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
