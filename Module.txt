@@ -1,4 +1,4 @@
-﻿Name: CodeSanook.Common
+﻿Name: Codesanook.Common
 AntiForgery: enabled
 Author: Aaron Amm
 Website: https://www.codesanook.com
