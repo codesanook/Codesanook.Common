@@ -1,4 +1,7 @@
-﻿using System.Web;
+﻿using System;
+using System.Globalization;
+using System.Reflection;
+using System.Web;
 using Autofac;
 using Codesanook.Common.Web;
 using JavaScriptEngineSwitcher.Core;
@@ -6,7 +9,7 @@ using JavaScriptEngineSwitcher.V8;
 using React;
 
 namespace Codesanook.Common {
-    public class ComponentModule : Module {
+    public class ComponentModule : Autofac.Module {
 
         protected override void Load(ContainerBuilder builder) {
 
@@ -23,6 +26,33 @@ namespace Codesanook.Common {
             builder.RegisterType<JavaScriptEngineFactory>().As<JavaScriptEngineFactory>().SingleInstance();
             builder.RegisterType<ReactIdGenerator>().As<IReactIdGenerator>().SingleInstance();
             builder.RegisterType<ReactEnvironment>().As<IReactEnvironment>().InstancePerLifetimeScope();
+
+            RedirectAssembly("JavaScriptEngineSwitcher.Core", new Version("3.1.0.0"), "c608b2a8cc9e4472");
         }
+
+        ///https://blog.slaks.net/2013-12-25/redirecting-assembly-loads-at-runtime/
+        ///<summary>Adds an AssemblyResolve handler to redirect all attempts to load a specific assembly name to the specified version.</summary>
+        private static void RedirectAssembly(string shortName, Version targetVersion, string publicKeyToken) {
+            ResolveEventHandler handler = null;
+
+            handler = (sender, args) => {
+
+                // Use latest strong name & version when trying to load SDK assemblies
+                var requestedAssembly = new AssemblyName(args.Name);
+                if (requestedAssembly.Name != shortName)
+                    return null;
+
+                requestedAssembly.Version = targetVersion;
+                requestedAssembly.CultureInfo = CultureInfo.InvariantCulture;
+                //For security reasons public key token should match;
+                requestedAssembly.SetPublicKeyToken(new AssemblyName("x, PublicKeyToken=" + publicKeyToken).GetPublicKeyToken());
+                AppDomain.CurrentDomain.AssemblyResolve -= handler;
+
+                return Assembly.Load(requestedAssembly);
+            };
+
+            AppDomain.CurrentDomain.AssemblyResolve += handler;
+        }
+
     }
 }
