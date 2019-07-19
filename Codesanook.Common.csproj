@@ -166,6 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="Scripts\angular-messages.js" />
+    <Content Include="Scripts\lodash.js" />
     <Content Include="Scripts\react-dom.development.js" />
     <Content Include="Scripts\react.development.js" />
     <Content Include="Scripts\system.js" />
