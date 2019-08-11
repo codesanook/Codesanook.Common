@@ -4,4 +4,4 @@ Author: Codesanook Team
 Website: https://www.codesanook.com
 Version: 1.0
 OrchardVersion: 1.0
-Description: Common classes used by CodeSanook modules
+Description: Common classes used by Codesanook modules
