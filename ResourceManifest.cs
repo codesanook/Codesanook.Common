@@ -1,6 +1,6 @@
 using Orchard.UI.Resources;
 
-namespace Orchard.Core.Common
+namespace Codesanook.Common
 {
     public class ResourceManifest : IResourceManifestProvider
     {
