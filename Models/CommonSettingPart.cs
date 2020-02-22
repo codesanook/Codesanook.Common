@@ -1,7 +1,7 @@
 using Orchard.ContentManagement;
 
 namespace Codesanook.Common.Models {
-    public class SharedSettingPart : ContentPart {
+    public class CommonSettingPart : ContentPart {
 
         public string AwsAccessKey {
             get => this.Retrieve(x => x.AwsAccessKey);

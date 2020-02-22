@@ -1,7 +1,6 @@
-@model Codesanook.Common.Models.SharedSettingPart
+@model Codesanook.Common.Models.CommonSettingPart
 <fieldset>
-    <legend>@T("Codesanook shared settings")</legend>
-
+    <legend>@T("AWS")</legend>
     <div>
         @Html.LabelFor(m => m.AwsAccessKey)
         @Html.TextBoxFor(m => m.AwsAccessKey, new { @class = "text large" })
@@ -13,10 +12,13 @@
         @Html.TextBoxFor(m => m.AwsSecretKey, new { @class = "text large" })
         @Html.ValidationMessageFor(m => m.AwsSecretKey, "*")
     </div>
+</fieldset>
 
+<fieldset>
+    <legend>@T("Facebook")</legend>
     <div>
         @Html.LabelFor(m => m.FacebookAppId)
-        @Html.TextBoxFor(m => m.FacebookAppId, new { @class = "text medium" })
+        @Html.TextBoxFor(m => m.FacebookAppId, new { @class = "text large" })
         @Html.ValidationMessageFor(m => m.FacebookAppId, "*")
     </div>
 

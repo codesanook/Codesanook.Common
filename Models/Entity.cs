@@ -50,6 +50,5 @@ namespace Codesanook.Common.Models
             obj != null && Equals(obj.Id, default(TId));
 
         private Type GetUnproxiedType() => GetType();
-
     }
 }

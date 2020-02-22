@@ -170,6 +170,6 @@ namespace Codesanook.Common.DataType
             var utcNow = beginningOfTimeStamp.AddSeconds(timestamp);
             return utcNow;
         }
-
     }
 }
+

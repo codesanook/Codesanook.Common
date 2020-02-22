@@ -3,11 +3,11 @@ using System.Text;
 
 namespace Codesanook.Common
 {
-    public class RandomHelper
+    public static class RandomHelper
     {
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
 
-        public static String GenerateRandomCharacters(int randomLength)
+        public static string GenerateRandomCharacters(int randomLength)
         {
             // Create an array of characters to user for password reset.
             // Exclude confusing or ambiguous characters such as 1 0 l o i
