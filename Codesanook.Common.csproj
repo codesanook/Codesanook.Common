@@ -126,11 +126,14 @@
     <Compile Include="DataTypes\StringHelper.cs" />
     <Compile Include="Data\DeepTransformer.cs" />
     <Compile Include="Data\JsonString.cs" />
+    <Compile Include="Handlers\CommonSettingPartHandler.cs" />
+    <Compile Include="Handlers\IConfigurationEventHandler.cs" />
     <Compile Include="Json\OnlyDateConverter.cs" />
     <Compile Include="Models\ContentHelper.cs" />
     <Compile Include="Models\ModelHelper.cs" />
     <Compile Include="Data\SchemaHelper.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\SharedSettingPart.cs" />
     <Compile Include="Modules\ModuleHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomHelper.cs" />
@@ -162,6 +165,7 @@
     </None>
     <Content Include="Scripts\Web.config" />
     <Content Include="README.md" />
+    <Content Include="Views\EditorTemplates\Parts\SharedSetting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
