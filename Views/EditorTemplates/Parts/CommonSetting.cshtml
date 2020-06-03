@@ -21,5 +21,14 @@
         @Html.TextBoxFor(m => m.FacebookAppId, new { @class = "text large" })
         @Html.ValidationMessageFor(m => m.FacebookAppId, "*")
     </div>
+</fieldset>
 
+
+<fieldset>
+    <legend>@T("Google")</legend>
+    <div>
+        @Html.LabelFor(m => m.GoogleServiceAccountP12Key)
+        @Html.TextAreaFor(m => m.GoogleServiceAccountP12Key, new { @class = "text large" })
+        @Html.ValidationMessageFor(m => m.GoogleServiceAccountP12Key, "*")
+    </div>
 </fieldset>
