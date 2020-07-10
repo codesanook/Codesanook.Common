@@ -3,7 +3,7 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Localization;
 
-namespace Codesanook.Configuration.Handlers {
+namespace Codesanook.Common.Handlers {
     public class CommonSettingPartHandler : ContentHandler {
         public Localizer T { get; set; }
 

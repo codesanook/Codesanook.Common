@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Codesanook.Configuration.Handlers
+namespace Codesanook.Common.Handlers
 {
     public interface IConfigurationEventHandler:IEventHandler
     {
