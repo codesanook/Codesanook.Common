@@ -136,7 +136,12 @@
     <Compile Include="Models\CommonSettingPart.cs" />
     <Compile Include="Modules\ModuleHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyBinders\CustomModelBinder.cs" />
+    <Compile Include="PropertyBinders\IPropertyBinder.cs" />
+    <Compile Include="PropertyBinders\PhoneNumberPropertyBinder.cs" />
+    <Compile Include="PropertyBinders\PropertyBinderAttribute.cs" />
     <Compile Include="RandomHelper.cs" />
+    <Compile Include="ShellEvent.cs" />
     <Compile Include="Web\JsonActionResult.cs" />
     <Compile Include="Web\MvcHelper.cs" />
   </ItemGroup>
